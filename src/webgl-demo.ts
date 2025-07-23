@@ -1,3 +1,6 @@
+import { initBuffers } from "./init-buffers";
+import { drawScene } from "./draw-scene";
+
 main();
 
 function main() {
@@ -43,10 +46,14 @@ gl_FragColor = vec4(1.0,1.0,1.0,1.0);
       modelViewMatrix: gl.getUniformLocation(shaderProgram, "uModelViewMatrix"),
     },
   };
+
+  const buffers = initBuffers(gl);
+
+  drawScene(gl, programInfo, buffers);
 }
 
 function initShaderProgram(
-  gl: WebGL2RenderingContext,
+  gl: WebGLRenderingContext,
   vsSource: string,
   fsSource: string
 ) {
@@ -71,7 +78,7 @@ function initShaderProgram(
   return shaderProgram;
 }
 
-function loadShader(gl: WebGL2RenderingContext, type: number, source: string) {
+function loadShader(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type);
 
   gl.shaderSource(shader, source);
