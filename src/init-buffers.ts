@@ -18,12 +18,12 @@ function initPositionBuffer(gl: WebGLRenderingContext) {
 
   const positions = [
     1.0,
-    1.05, // top left
-    -1.1,
-    1.1, // top right
-    1.1,
+    1.00, // top left
+    -1.0,
+    1.0, // top right
+    1.0,
     -1.0, // bottom left
-    -1.1,
+    -1.0,
     -1.0, // bottom right
   ];
 

@@ -6,6 +6,9 @@ import { drawScene } from "./draw-scene";
 
 main();
 
+let squareRotation = 0.0;
+let deltaTime = 0;
+
 function main() {
   const canvas = document.getElementById("gl-canvas") as HTMLCanvasElement;
 
@@ -38,7 +41,21 @@ function main() {
 
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers);
+  let then = 0;
+
+  function render(now: number) {
+    now *= 0.001;
+    deltaTime = now - then;
+    then = now;
+
+    drawScene(gl, programInfo, buffers, squareRotation);
+    squareRotation += deltaTime;
+
+    // requestAnimationFrame will pass render the amount of time in milliseconds since the page loaded
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
 }
 
 function initShaderProgram(

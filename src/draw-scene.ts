@@ -7,7 +7,8 @@ type Buffers = ReturnType<typeof initBuffers>;
 function drawScene(
   gl: WebGLRenderingContext,
   programInfo: ProgramInfo,
-  buffers: Buffers
+  buffers: Buffers,
+  squareRotation: number
 ) {
   gl.clearColor(0.0, 0.0, 0.2, 1.0);
   gl.clearDepth(1.0);
@@ -31,6 +32,9 @@ function drawScene(
 
   // move the camera a back a bit as you'd do in three.js
   mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -6.0]);
+
+  // const rotationMatrix = mat4.create();
+  mat4.rotateY(modelViewMatrix, modelViewMatrix, squareRotation);
 
   setPositionAttribute(gl, buffers, programInfo);
   setColorAttribute(gl, buffers, programInfo);
