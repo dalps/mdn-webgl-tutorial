@@ -1,11 +1,13 @@
 function initBuffers(gl: WebGLRenderingContext) {
   const positionBuffer = init3DPositionBuffer(gl);
-  const colorBuffer = init3DColorBuffer(gl);
+  // const colorBuffer = init3DColorBuffer(gl);
+  const textureCoordBuffer = initTextureBuffer(gl);
   const indexBuffer = initIndexBuffer(gl);
 
   return {
     position: positionBuffer,
-    color: colorBuffer,
+    // color: colorBuffer,
+    textureCoord: textureCoordBuffer,
     indices: indexBuffer,
   };
 }
@@ -18,13 +20,12 @@ function initIndexBuffer(gl: WebGLRenderingContext) {
   // Two triangles for each face
   const indeces = [];
 
+  // [ 0,1,2,   1,2,3,   4,5,6,   5,6,7 ]
   for (let i = 0; i < 6; i++) {
     const j = i * 4;
     indeces.push(j, j + 1, j + 2);
     indeces.push(j + 1, j + 2, j + 3);
   }
-
-  console.log(indeces)
 
   gl.bufferData(
     gl.ELEMENT_ARRAY_BUFFER,
@@ -33,6 +34,34 @@ function initIndexBuffer(gl: WebGLRenderingContext) {
   );
 
   return indexBuffer;
+}
+
+function initTextureBuffer(gl: WebGLRenderingContext) {
+  const textureCoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, textureCoordBuffer);
+
+  const textureCoordinates = [
+    // Front
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    // Back
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    // Top
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    // Bottom
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    // Left
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    // Right
+    0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+  ];
+
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array(textureCoordinates),
+    gl.STATIC_DRAW
+  );
+
+  return textureCoordBuffer;
 }
 
 /**

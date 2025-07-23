@@ -9,3 +9,16 @@ export interface ProgramInfo {
     modelViewMatrix: WebGLUniformLocation;
   };
 }
+
+export interface ProgramInfoWithTexture {
+  program: WebGLProgram | null;
+  attribLocations: {
+    vertexPosition: GLuint;
+    textureCoord: GLuint;
+  };
+  uniformLocations: {
+    projectionMatrix: WebGLUniformLocation | null;
+    modelViewMatrix: WebGLUniformLocation | null;
+    uSampler: WebGLUniformLocation | null;
+  };
+}
