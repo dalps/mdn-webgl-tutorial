@@ -9,7 +9,7 @@ function drawScene(
   programInfo: ProgramInfo,
   buffers: Buffers
 ) {
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(0.0, 0.0, 0.2, 1.0);
   gl.clearDepth(1.0);
   gl.enable(gl.DEPTH_TEST);
   gl.depthFunc(gl.LEQUAL);
@@ -33,6 +33,7 @@ function drawScene(
   mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -6.0]);
 
   setPositionAttribute(gl, buffers, programInfo);
+  setColorAttribute(gl, buffers, programInfo);
 
   gl.useProgram(programInfo.program);
 
@@ -77,6 +78,30 @@ function setPositionAttribute(
   );
 
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+}
+
+function setColorAttribute(
+  gl: WebGLRenderingContext,
+  buffers: Buffers,
+  programInfo: ProgramInfo
+) {
+  const numComponents = 4;
+  const type = gl.FLOAT;
+  const normalize = false;
+  const stride = 0;
+  const offset = 0;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexColor,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
 }
 
 export { drawScene };
