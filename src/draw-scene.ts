@@ -39,9 +39,16 @@ function drawScene(
   mat4.rotateY(modelViewMatrix, modelViewMatrix, cubeRotation * 0.7);
   mat4.rotateZ(modelViewMatrix, modelViewMatrix, cubeRotation);
 
+  // compute the normals relative to the current viewing angle
+  const normalMatrix = mat4.create();
+  mat4.invert(normalMatrix, modelViewMatrix);
+  mat4.transpose(normalMatrix, normalMatrix);
+
+  // send the matrices values to the shaders
   setPositionAttribute(gl, buffers, programInfo);
   // setColorAttribute(gl, buffers, programInfo);
   setTextureAttribute(gl, buffers, programInfo);
+  setNormalAttribute(gl, buffers, programInfo);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
 
@@ -59,6 +66,12 @@ function drawScene(
     modelViewMatrix
   );
 
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.normalMatrix,
+    false,
+    normalMatrix
+  );
+  
   //
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -71,6 +84,29 @@ function drawScene(
     const offset = 0;
     gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
   }
+}
+
+function setNormalAttribute(
+  gl: WebGLRenderingContext,
+  buffers: Buffers,
+  programInfo: ProgramInfoWithTexture
+) {
+  const numComponents = 3;
+  const type = gl.FLOAT;
+  const normalize = false;
+  const stride = 0;
+  const offset = 0;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexNormal,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
 }
 
 function setTextureAttribute(

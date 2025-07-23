@@ -11,14 +11,29 @@ export interface ProgramInfo {
 }
 
 export interface ProgramInfoWithTexture {
-  program: WebGLProgram | null;
+  program: WebGLProgram;
   attribLocations: {
     vertexPosition: GLuint;
     textureCoord: GLuint;
   };
   uniformLocations: {
-    projectionMatrix: WebGLUniformLocation | null;
-    modelViewMatrix: WebGLUniformLocation | null;
-    uSampler: WebGLUniformLocation | null;
+    projectionMatrix: WebGLUniformLocation;
+    modelViewMatrix: WebGLUniformLocation;
+    uSampler: WebGLUniformLocation;
+  };
+}
+
+export interface ProgramInfoWithTextureAndLighting {
+  program: WebGLProgram;
+  attribLocations: {
+    vertexPosition: GLuint;
+    vertexNormal: GLuint;
+    textureCoord: GLuint;
+  };
+  uniformLocations: {
+    projectionMatrix: WebGLUniformLocation;
+    normalMatrix: WebGLUniformLocation;
+    modelViewMatrix: WebGLUniformLocation;
+    uSampler: WebGLUniformLocation;
   };
 }

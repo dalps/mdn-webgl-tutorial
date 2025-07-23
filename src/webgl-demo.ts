@@ -1,9 +1,13 @@
-import vsSource from "./demo_texture.vert?raw";
-import fsSource from "./demo_texture.frag?raw";
+import vsSource from "./demo_lighting.vert?raw";
+import fsSource from "./demo_lighting.frag?raw";
 
 import { initBuffers } from "./init-buffers";
 import { drawScene } from "./draw-scene";
-import type { ProgramInfo, ProgramInfoWithTexture } from "./types";
+import type {
+  ProgramInfo,
+  ProgramInfoWithTexture,
+  ProgramInfoWithTextureAndLighting,
+} from "./types";
 
 main();
 
@@ -25,10 +29,11 @@ function main() {
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
-  const programInfo = {
+  const programInfo: ProgramInfoWithTextureAndLighting = {
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, "aVertexPosition"),
+      vertexNormal: gl.getAttribLocation(shaderProgram, "aVertexNormal"),
       textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
     },
     uniformLocations: {
@@ -36,6 +41,7 @@ function main() {
         shaderProgram,
         "uProjectionMatrix"
       ),
+      normalMatrix: gl.getUniformLocation(shaderProgram, "uNormalMatrix"),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, "uModelViewMatrix"),
       uSampler: gl.getUniformLocation(shaderProgram, "uSampler"),
     },
