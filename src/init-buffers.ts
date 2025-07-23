@@ -16,7 +16,16 @@ function initPositionBuffer(gl: WebGLRenderingContext) {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  const positions = [1.0, 1.05, -1.1, 1.1, 1.1, -1.0, -1.1, -1.0];
+  const positions = [
+    1.0,
+    1.05, // top left
+    -1.1,
+    1.1, // top right
+    1.1,
+    -1.0, // bottom left
+    -1.1,
+    -1.0, // bottom right
+  ];
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 

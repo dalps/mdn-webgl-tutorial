@@ -1,3 +1,6 @@
+import vsSource from "./demo.vert?raw";
+import fsSource from "./demo.frag?raw";
+
 import { initBuffers } from "./init-buffers";
 import { drawScene } from "./draw-scene";
 
@@ -15,27 +18,6 @@ function main() {
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
-
-  const vsSource = /*glsl*/ `
-attribute vec4 aVertexPosition;
-attribute vec4 aVertexColor;
-
-uniform mat4 uModelViewMatrix;
-uniform mat4 uProjectionMatrix;
-
-varying lowp vec4 vColor;
-
-void main() {
-  gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
-  vColor = aVertexColor;
-}`;
-
-  const fsSource = /*glsl*/ `
-varying lowp vec4 vColor;
-
-void main(){
-  gl_FragColor = vColor;
-}`;
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
