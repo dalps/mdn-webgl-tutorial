@@ -15,9 +15,9 @@ void main() {
 
   // Apply lighting effect
 
-  highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
-  highp vec3 directionalLightColor = vec3(1, 1, 1);
-  highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
+  highp vec3 ambientLightColor = vec3(0.53, 0.49, 0.58);
+  highp vec3 directionalLightColor = vec3(0.0, 1.0, 0.12);
+  highp vec3 directionalVector = normalize(vec3(-10, 10, 10));
 
   highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
 
@@ -26,5 +26,5 @@ void main() {
   highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
 
   // a color without the alpha component
-  vLighting = ambientLight + (directionalLightColor * directional);
+  vLighting = ambientLightColor + (directionalLightColor * directional);
 }
